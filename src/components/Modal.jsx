@@ -45,6 +45,7 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
     const [form] = Form.useForm();
     const handleSave = async () => {
         try {
+          setIsModalOpen(false);
             if (editingProject) {
              updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
               await api.updateProject(editingProject.id, { name: projectName, isFavorite, color: selectedColor });
@@ -53,7 +54,6 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
                 const project = await api.addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});
                 addProject(project);
             }
-            setIsModalOpen(false);
             setEditingProject(null);
          
         } catch (error) {

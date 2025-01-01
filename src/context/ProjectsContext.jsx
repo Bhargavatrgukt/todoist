@@ -23,7 +23,7 @@ export const ProjectsProvider = ({ children }) => {
         project.id === updatedProject.id ? updatedProject : project
       )
     );
-  };
+  }
 
   const deleteProject = (projectId) => {
     setProjects((prevProjects) =>
