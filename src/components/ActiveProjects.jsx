@@ -21,8 +21,8 @@ const ActiveProjects = () => {
      setDeleteModal,
      setProjectToDelete,
    } = useProjectState();
-//    const filteredProjects=projects.slice(1,).map((project)=>project.name.includes(projectName))
-   const formattedProjects = generateProjectItems(projects.slice(1,), "user", hoveredKey,
+   const filteredProjects=projects.slice(1,).filter((project)=>project.name.toLowerCase().includes(projectName.toLocaleLowerCase()))
+   const formattedProjects = generateProjectItems(filteredProjects, "user", hoveredKey,
    setHoveredKey,
    selectedProjectId,
    setSelectedProjectId,
@@ -55,7 +55,7 @@ const ActiveProjects = () => {
             </Tooltip>
         </div>
         <Space />
-        <p className='text-[#202020] text-base'>{projects.length -1} projects</p>
+        <p className='text-[#202020] text-base'>{filteredProjects.length} projects</p>
         <Divider />
         <ul className="list-none space-y-2">
             {formattedProjects.map((project) => (
