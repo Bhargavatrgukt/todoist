@@ -2,6 +2,8 @@ import { colorForHash } from "./colorUtils";
 import MoreActions from "../components/MoreActions";
 import {EllipsisOutlined} from "@ant-design/icons";
 import {  Tooltip, Dropdown } from "antd";
+import { Link } from "react-router";
+import slugify from "./slugify";
 
 const generateProjectItems = (projects, prefix ,hoveredKey,
   setHoveredKey,
@@ -19,51 +21,53 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
     return {
       key: `${prefix}-${project.id}`,
       label: (
-        <div
-          className={`flex justify-between ${
-            selectedProjectId === project.id && active
-              ? `bg-[#ffeee5] text-[#d1453b]`
-              : ""
-          }`}
-          onMouseEnter={() => setHoveredKey(`${prefix}-${project.id}`)}
-          onMouseLeave={() => setHoveredKey(null)}
-          onClick={() => setSelectedProjectId(project.id)}
-        >
-          <Tooltip title={project.name} placement="right">
-            <span style={{ color: colorStyle }}>#</span> {project.name}
-          </Tooltip>
-          <Dropdown
-            trigger={["click"]}
-            menu={MoreActions({
-              project,
-              setDeleteModal,
-              setProjectToDelete,
-              setEditingProject,
-              setIsModalOpen,
-              updateProject,
-            })}
-            placement="rightTop"
+        <Link to={`/${slugify(project.name)}-${project.id}`}>
+          <div
+            className={`flex justify-between ${
+              selectedProjectId === project.id && active
+                ? `bg-[#ffeee5] text-[#d1453b]`
+                : ""
+            }`}
+            onMouseEnter={() => setHoveredKey(`${prefix}-${project.id}`)}
+            onMouseLeave={() => setHoveredKey(null)}
+            onClick={() => setSelectedProjectId(project.id)}
           >
-            <Tooltip title={"More Actions"}>
-              {hoveredKey === `user-${project.id}` && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    console.log("CLICKED");
-                  }}
-                  style={{
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  <EllipsisOutlined style={{ fontSize: "22px" }} />
-                </button>
-              )}
+            <Tooltip title={project.name} placement="right">
+              <span style={{ color: colorStyle }}>#</span> {project.name}
             </Tooltip>
-          </Dropdown>
-        </div>
+            <Dropdown
+              trigger={["click"]}
+              menu={MoreActions({
+                project,
+                setDeleteModal,
+                setProjectToDelete,
+                setEditingProject,
+                setIsModalOpen,
+                updateProject,
+              })}
+              placement="rightTop"
+            >
+              <Tooltip title={"More Actions"}>
+                {(hoveredKey === `${prefix}-${project.id}`)  && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // console.log("CLICKED");
+                    }}
+                    style={{
+                      border: "none",
+                      background: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <EllipsisOutlined style={{ fontSize: "22px" }} />
+                  </button>
+                )}
+              </Tooltip>
+            </Dropdown>
+          </div>
+        </Link>
       ),
     };
   });

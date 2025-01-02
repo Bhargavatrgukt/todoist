@@ -12,14 +12,6 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
   const [selectedColor, setSelectedColor] = useState(editingProject?.color || "charcoal");
   const {addProject, updateProject }= useContext(ProjectsContext);
 
-  useEffect(() => {
-    if (editingProject) {
-      setProjectName(editingProject.name);
-      setIsFavorite(editingProject.isFavorite);
-      setSelectedColor(editingProject.color);
-    }
-  }, [editingProject]);
-
     const selectOptions=colorPalette.map((colorDetails)=>{
         return {
             value:colorDetails.dataValue,
@@ -47,8 +39,8 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
         try {
           setIsModalOpen(false);
             if (editingProject) {
-             updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
               await api.updateProject(editingProject.id, { name: projectName, isFavorite, color: selectedColor });
+              updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
               console.log("Project updated!");
             }else{
                 const project = await api.addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});

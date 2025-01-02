@@ -44,6 +44,7 @@ const SideBar = ({ collapsed, toggleCollapsed }) => {
 
       {isModalOpen && (
         <ModalComponent
+          // key={editingProject?.id}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           editingProject={editingProject}

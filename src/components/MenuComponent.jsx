@@ -29,15 +29,20 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
   setIsModalOpen,
   updateProject);
 
-  const favoriteProjects = generateProjectItems(projects.slice(1,).filter((project) => project.isFavorite), "favorite",setHoveredKey,
-  selectedProjectId,
-  setSelectedProjectId,
-  setDeleteModal,
-  setProjectToDelete,
-  setEditingProject,
-  setIsModalOpen,
-  updateProject);
-
+  const favoriteProjects = generateProjectItems(
+    projects.slice(1).filter((project) => project.isFavorite),
+    "favorite",
+    hoveredKey,
+    setHoveredKey,
+    selectedProjectId,
+    setSelectedProjectId,
+    setDeleteModal,
+    setProjectToDelete,
+    setEditingProject,
+    setIsModalOpen,
+    updateProject
+  );
+  
   const items = [
     {
       key: "add-task",

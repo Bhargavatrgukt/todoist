@@ -1,7 +1,7 @@
 import { EditOutlined, HeartOutlined, DeleteOutlined, HeartFilled } from "@ant-design/icons";
 import api from "../services/todoApi";
 
-// This component should return the menuItems directly to avoid hooks being called conditionally
+
 const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingProject, setIsModalOpen, updateProject }) => {
   const handleEdit = () => {
     setEditingProject(project);
