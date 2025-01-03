@@ -40,9 +40,17 @@ export const ProjectsProvider = ({ children }) => {
     );
   };
 
+  const addTask=(newTask)=>{
+    setTasks((prevTasks)=>[...prevTasks,newTask])
+  }
+
+  const deleteTask=(taskId)=>{
+    setTasks((prevTasks)=>prevTasks.filter((task)=>task.id !== taskId))
+  }
+
   return (
     <ProjectsContext.Provider
-      value={{ projects, addProject, updateProject, deleteProject,tasks }}
+      value={{ projects, addProject, updateProject, deleteProject,tasks,addTask ,deleteTask}}
     >
       {children}
     </ProjectsContext.Provider>

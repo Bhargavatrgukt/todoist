@@ -1,11 +1,24 @@
-import React from 'react'
 import { Divider} from "antd";
 import {HolderOutlined,EditOutlined,EllipsisOutlined} from "@ant-design/icons";
 import { Checkbox } from "antd";
+import api from '../services/todoApi';
+import { ProjectsContext } from '../context/ProjectsContext';
+import { useContext } from 'react';
 
 const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
+
+  const {deleteTask}=useContext(ProjectsContext)
+
+  const handleChange=async()=>{
+    try {
+      await api.deleteTask(task.id)
+      deleteTask(task.id)
+    } catch (error) {
+      console.log(`error at deleting task`,error)
+    }
+  }
   return (
-    <div className='flex flex-col' 
+    <li className='flex flex-col' 
       onMouseEnter={() => setHoveredKey(task?.id)}
       onMouseLeave={() => setHoveredKey(null)}
     >
@@ -18,7 +31,10 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
             (<div>
               <HolderOutlined />
             </div> )}
-            <li className="text-[#202020] font-medium pl-2"><Checkbox>{task.content}</Checkbox></li>
+              <div>
+                <p className="text-[#202020] font-medium pl-2"><Checkbox onChange={handleChange}>{task.content}</Checkbox></p>
+                <p className="text-[#202020] font-medium ml-3">{task.description}</p>
+              </div>
           </div>
           {(hoveredKey===task?.id )&&(
           <div className='flex'>
@@ -31,7 +47,7 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
           </div>)}
         </div>  
         <Divider className="my-2" />
-    </div>  
+    </li>  
   )
 }
 
