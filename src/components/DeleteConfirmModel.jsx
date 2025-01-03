@@ -2,12 +2,15 @@ import React,{useContext} from "react";
 import { Button, Modal } from "antd";
 import { ProjectsContext } from "../context/ProjectsContext.jsx";
 import api from "../services/todoApi.js";
+import { useNavigate } from "react-router";
 
 const DeleteConfirmModel = ({ open, setOpen, project }) => {
    const { deleteProject } = useContext(ProjectsContext)
+   const navigate = useNavigate(); 
 
   const handleDelete = async() => {
     try{
+      // navigate("/")
       deleteProject(project.id)
       setOpen(false); 
       await api.deleteProject(project.id)

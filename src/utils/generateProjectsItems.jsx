@@ -32,7 +32,7 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
             onMouseLeave={() => setHoveredKey(null)}
             onClick={() => {
               setSelectedProjectId(project.id)
-              navigate(`/${slugify(project.name)}-${project.id}`);
+              navigate(`/${slugify(project.name)}-${project.id}`)
             }}
           > 
             {/* <Link to={`/${slugify(project.name)}-${project.id}`}> */}
@@ -40,38 +40,40 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
                 <span style={{ color: colorStyle  }}>#</span> {project.name}
               </Tooltip>
             {/* </Link> */}
-            <Dropdown
-              trigger={["click"]}
-              menu={MoreActions({
-                project,
-                setDeleteModal,
-                setProjectToDelete,
-                setEditingProject,
-                setIsModalOpen,
-                updateProject,
-              })}
-              placement="rightTop"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Tooltip title={"More Actions"}>
-                {(hoveredKey === `${prefix}-${project.id}`)  && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // console.log("CLICKED");
-                    }}
-                    style={{
-                      border: "none",
-                      background: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <EllipsisOutlined style={{ fontSize: "22px" }} />
-                  </button>
-                )}
-              </Tooltip>
-            </Dropdown>
+            <div onClick={(e)=>e.stopPropagation()}>
+              <Dropdown
+                trigger={["click"]}
+                menu={MoreActions({
+                  project,
+                  setDeleteModal,
+                  setProjectToDelete,
+                  setEditingProject,
+                  setIsModalOpen,
+                  updateProject,
+                })}
+                placement="rightTop"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Tooltip title={"More Actions"}>
+                  {(hoveredKey === `${prefix}-${project.id}`)  && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // console.log("CLICKED");
+                      }}
+                      style={{
+                        border: "none",
+                        background: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <EllipsisOutlined style={{ fontSize: "22px" }} />
+                    </button>
+                  )}
+                </Tooltip>
+              </Dropdown>
+            </div>
           </div>
       ),
     };

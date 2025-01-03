@@ -7,7 +7,7 @@ import {PlusCircleOutlined,PlusOutlined } from "@ant-design/icons";
 import AddTask from '../components/AddTask';
 
 const ProjectTaskRoute = ({project}) => {
-  const{tasks,addTask}=useContext(ProjectsContext)
+  const{tasks}=useContext(ProjectsContext)
   const {hoveredKey, setHoveredKey}=useProjectState()
   const [isAddTask, setIsAddTask] = useState(false);
 
@@ -36,7 +36,7 @@ const ProjectTaskRoute = ({project}) => {
                   (<PlusCircleOutlined style={{ color: "#C35646", fontSize: "18px"}}/>):(<PlusOutlined />)} 
                   <p className='pl-4'>Add Task</p>
                 </div>}
-                {isAddTask &&  <AddTask project={project} setIsAddTask={setIsAddTask} addTask={addTask}/>}
+                {isAddTask &&  <AddTask projectIdOfTask={project.id} setIsAddTask={setIsAddTask} />}
             </div>
         </div>
     </>

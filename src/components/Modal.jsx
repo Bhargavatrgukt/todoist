@@ -41,7 +41,7 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
             if (editingProject) {
               await api.updateProject(editingProject.id, { name: projectName, isFavorite, color: selectedColor });
                updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
-              console.log("Project updated!");
+              // console.log("Project updated!");
             }else{
                 const project = await api.addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});
                 addProject(project);
