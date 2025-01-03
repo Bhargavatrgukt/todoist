@@ -5,6 +5,7 @@ import { ProjectsContext } from "../context/ProjectsContext.jsx";
 import DeleteConfirmModel from "./DeleteConfirmModel.jsx";
 import { useProjectState } from "../hooks/projectHook.js";
 import generateProjectItems from "../utils/generateProjectsItems.jsx";
+import { Link } from "react-router";
 
 const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
   const {
@@ -42,6 +43,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
     setIsModalOpen,
     updateProject
   );
+
   
   const items = [
     {
@@ -53,15 +55,17 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
       key: "inbox",
       icon: <InboxOutlined style={{ fontSize: "18px" }} />,
       label: (
-        <div
-          className="flex justify-between"
-          onMouseEnter={() => setHoveredKey(`user-${projects[0]?.id}`)}
-          onMouseLeave={() => setHoveredKey(null)}
-        >
-          <Tooltip title={projects[0]?.name} placement="right">
-            <span style={{ color: "#808080" }}>#</span> {projects[0]?.name}
-          </Tooltip>
-        </div>
+        <Link to={`/${projects[0]?.name.toLowerCase()}-${projects[0]?.id}`}>
+          <div
+            className="flex justify-between"
+            onMouseEnter={() => setHoveredKey(`user-${projects[0]?.id}`)}
+            onMouseLeave={() => setHoveredKey(null)}
+          >
+            <Tooltip title={projects[0]?.name} placement="right">
+              <span style={{ color: "#808080" }}>#</span> {projects[0]?.name}
+            </Tooltip>
+          </div>
+        </Link>
       ),
     },
     {

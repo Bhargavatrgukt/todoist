@@ -2,7 +2,7 @@ import { colorForHash } from "./colorUtils";
 import MoreActions from "../components/MoreActions";
 import {EllipsisOutlined} from "@ant-design/icons";
 import {  Tooltip, Dropdown } from "antd";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import slugify from "./slugify";
 
 const generateProjectItems = (projects, prefix ,hoveredKey,
@@ -14,6 +14,7 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
   setEditingProject,
   setIsModalOpen,
   updateProject,active=true) => {
+    const navigate = useNavigate();  
   return projects.map((project) => {
     const colorDetails = colorForHash(project.color);
     const colorStyle = colorDetails ? colorDetails.color : project.color;
@@ -21,7 +22,6 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
     return {
       key: `${prefix}-${project.id}`,
       label: (
-        <Link to={`/${slugify(project.name)}-${project.id}`}>
           <div
             className={`flex justify-between ${
               selectedProjectId === project.id && active
@@ -30,11 +30,16 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
             }`}
             onMouseEnter={() => setHoveredKey(`${prefix}-${project.id}`)}
             onMouseLeave={() => setHoveredKey(null)}
-            onClick={() => setSelectedProjectId(project.id)}
-          >
-            <Tooltip title={project.name} placement="right">
-              <span style={{ color: colorStyle }}>#</span> {project.name}
-            </Tooltip>
+            onClick={() => {
+              setSelectedProjectId(project.id)
+              navigate(`/${slugify(project.name)}-${project.id}`);
+            }}
+          > 
+            {/* <Link to={`/${slugify(project.name)}-${project.id}`}> */}
+              <Tooltip title={project.name} placement="right">
+                <span style={{ color: colorStyle  }}>#</span> {project.name}
+              </Tooltip>
+            {/* </Link> */}
             <Dropdown
               trigger={["click"]}
               menu={MoreActions({
@@ -46,6 +51,7 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
                 updateProject,
               })}
               placement="rightTop"
+              onClick={(e) => e.stopPropagation()}
             >
               <Tooltip title={"More Actions"}>
                 {(hoveredKey === `${prefix}-${project.id}`)  && (
@@ -67,7 +73,6 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
               </Tooltip>
             </Dropdown>
           </div>
-        </Link>
       ),
     };
   });

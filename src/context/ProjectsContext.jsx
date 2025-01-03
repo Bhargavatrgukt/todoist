@@ -5,13 +5,22 @@ export const ProjectsContext = createContext();
 
 export const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
+   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    api
-      .getProjects()
-      .then((data) => setProjects(data))
-      .catch((error) => console.error(error));
+    const fetchData = async () => {
+      try {
+        const [projectsData, tasksData] = await Promise.all([api.getProjects(), api.getTasks()]);
+        setProjects(projectsData);
+        setTasks(tasksData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   const addProject = (newProject) => {
     setProjects((prevProjects) => [...prevProjects, newProject]);
@@ -33,7 +42,7 @@ export const ProjectsProvider = ({ children }) => {
 
   return (
     <ProjectsContext.Provider
-      value={{ projects, addProject, updateProject, deleteProject }}
+      value={{ projects, addProject, updateProject, deleteProject,tasks }}
     >
       {children}
     </ProjectsContext.Provider>
