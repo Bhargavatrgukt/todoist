@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext,useState} from "react";
 import { PlusCircleOutlined, PlusOutlined, RightOutlined, DownOutlined, InboxOutlined} from "@ant-design/icons";
 import { ConfigProvider, Menu, Tooltip, Dropdown } from "antd";
 import { ProjectsContext } from "../context/ProjectsContext.jsx";
@@ -6,8 +6,10 @@ import DeleteConfirmModel from "./DeleteConfirmModel.jsx";
 import { useProjectState } from "../hooks/projectHook.js";
 import generateProjectItems from "../utils/generateProjectsItems.jsx";
 import { Link } from "react-router";
+import TaskModel from "./TaskModel.jsx";
 
 const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
+  const [taskModalOpen, setTaskModalOpen] = useState(false);
   const {
      hoveredKey,
     setHoveredKey,
@@ -19,6 +21,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
     setProjectToDelete,
   } = useProjectState();
   const { projects, updateProject } = useContext(ProjectsContext);
+  
 
   const formattedProjects = generateProjectItems(projects.slice(1,), "user", hoveredKey,
   setHoveredKey,
@@ -49,7 +52,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
     {
       key: "add-task",
       icon: <PlusCircleOutlined style={{ color: "#C35646", fontSize: "18px" }} />,
-      label: <span style={{ color: "#C35646", fontWeight: 800 }}>Add Task</span>,
+      label: <span style={{ color: "#C35646", fontWeight: 800 }}  onClick={() => setTaskModalOpen(true)} >Add Task</span>,
     },
     {
       key: "inbox",
@@ -145,6 +148,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
         `}
       </style>
       </ConfigProvider>
+      {taskModalOpen&&<TaskModel taskModalOpen={taskModalOpen} setTaskModalOpen={setTaskModalOpen} />}
     </>
   );
 };
