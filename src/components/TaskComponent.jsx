@@ -1,6 +1,6 @@
 import { Divider} from "antd";
-import {HolderOutlined,EditOutlined,EllipsisOutlined} from "@ant-design/icons";
-import { Checkbox } from "antd";
+import {HolderOutlined,EditOutlined,EllipsisOutlined,DeleteOutlined} from "@ant-design/icons";
+import { Checkbox,Dropdown } from "antd";
 import api from '../services/todoApi';
 import { ProjectsContext } from '../context/ProjectsContext';
 import { useContext,useState } from 'react';
@@ -19,6 +19,32 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
       console.log(`error at deleting task`,error)
     }
   }
+
+  const renderMenuItem = (icon, label, onClick) => (
+    <div className="flex gap-5" onClick={onClick}>
+      {icon}
+      <p>{label}</p>
+    </div>
+  );
+
+  const handleEdit=()=>{
+    setUpdateTask(true)
+  }
+
+ const items= [
+    {
+      key: "1",
+      label: renderMenuItem(<EditOutlined />, "Edit", handleEdit),
+    },
+    {
+      key: "2",
+      label: renderMenuItem(
+        <DeleteOutlined />,
+        "Delete",
+        handleChange
+      ),
+    },
+  ]
 
   return (
     <>
@@ -42,11 +68,18 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
             </div>
             {(hoveredKey===task?.id )&&(
             <div className='flex'>
-              <div className='p-2' onClick={()=>setUpdateTask(true)}>
+              <div className='p-2 cursor-pointer' onClick={handleEdit}>
                 <EditOutlined />
               </div>
-              <div className='p-2'>
+              <div className='p-2 cursor-pointer'>
+              <Dropdown
+                trigger={["click"]}
+                menu={{items}}
+                placement="rightTop"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <EllipsisOutlined />
+              </Dropdown>  
               </div>
             </div>)}
           </div>  
