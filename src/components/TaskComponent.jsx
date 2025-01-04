@@ -61,9 +61,9 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
               (<div>
                 <HolderOutlined />
               </div> )}
-                <div>
-                  <p className="text-[#202020] font-medium pl-2"><Checkbox onChange={handleChange}>{task.content}</Checkbox></p>
-                  <p className="text-[#202020] font-medium ml-3">{task.description}</p>
+                <div className="flex flex-col items-center px-3">
+                  <p className="text-[#202020]  pl-2 font-medium"><Checkbox onChange={handleChange}>{task.content}</Checkbox></p>
+                  <p className="text-gray-500 ml-3 font-light">{task.description}</p>
                 </div>
             </div>
             {(hoveredKey===task?.id )&&(
