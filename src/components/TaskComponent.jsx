@@ -48,7 +48,7 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
 
   return (
     <>
-      {!isUpdateTask &&<li className='flex flex-col' 
+      {!isUpdateTask &&<li className='flex flex-col group' 
         onMouseEnter={() => setHoveredKey(task?.id)}
         onMouseLeave={() => setHoveredKey(null)}
       >
@@ -57,31 +57,29 @@ const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
           key={task.id}
           >
             <div className='flex'>
-              {(hoveredKey===task?.id )&&
-              (<div>
+              <div className="hidden group-hover:block ">
                 <HolderOutlined />
-              </div> )}
+              </div> 
                 <div className="flex flex-col items-center px-3">
                   <p className="text-[#202020]  pl-2 font-medium"><Checkbox onChange={handleChange}>{task.content}</Checkbox></p>
                   <p className="text-gray-500 ml-3 font-light">{task.description}</p>
                 </div>
             </div>
-            {(hoveredKey===task?.id )&&(
             <div className='flex'>
-              <div className='p-2 cursor-pointer' onClick={handleEdit}>
+              <div className='p-2 cursor-pointer hidden group-hover:block' onClick={handleEdit}>
                 <EditOutlined />
               </div>
-              <div className='p-2 cursor-pointer'>
-              <Dropdown
-                trigger={["click"]}
-                menu={{items}}
-                placement="rightTop"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <EllipsisOutlined />
-              </Dropdown>  
+              <div className='p-2 cursor-pointer hidden group-hover:block'>
+                <Dropdown
+                  trigger={["click"]}
+                  menu={{items}}
+                  placement="rightTop"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <EllipsisOutlined />
+                </Dropdown>  
               </div>
-            </div>)}
+            </div>
           </div>  
           <Divider className="my-2" />
       </li>}
