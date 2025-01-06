@@ -10,27 +10,14 @@ export const ProjectsProvider = ({ children }) => {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = import.meta.env.VITE_MY_API_KEY;
-
-        if (!token) {
-          throw new Error("API Key is missing. Please set VITE_MY_API_KEY in the environment variables.");
-        }
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-
-        const [projectsData, tasksData] = await Promise.all([
-          api.getProjects({ headers }),
-          api.getTasks({ headers }),
-        ]);
-
+        const [projectsData, tasksData] = await Promise.all([api.getProjects(), api.getTasks()]);
         setProjects(projectsData);
         setTasks(tasksData);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
+        console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchData();
   }, []);
 
