@@ -13,7 +13,7 @@ const ProjectTaskRoute = ({project}) => {
   const [isAddTask, setIsAddTask] = useState(false);
   const tasks=useSelector((state)=>state.tasks.tasks)
 
-  console.log(tasks)
+  // console.log(tasks)
 
 
   const handleAddTask=(e)=>{

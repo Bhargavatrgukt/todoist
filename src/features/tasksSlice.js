@@ -3,7 +3,7 @@ import api from "../services/todoApi";
 
 export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async () => {
   const response = await api.getTasks();
-  console.log(response);
+  //   console.log(response);
   return response;
 });
 

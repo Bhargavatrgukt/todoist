@@ -16,6 +16,7 @@ const ActiveProjects = () => {
  const [projectName,searchProject]=useState("");   
 //  const {projects,updateProject }=useContext(ProjectsContext)
   const projects=useSelector((state)=>state.projects.projects);
+  // console.log(projects)
   const projectStatus=useSelector((state)=>state.projects.status);
 
  const {setIsModalOpen, setEditingProject}=useContext(ModelContext)
@@ -45,7 +46,7 @@ const ActiveProjects = () => {
   return (
     <>
       {projectStatus ==="loading" && <p>Loading</p>}
-      {!projectStatus ==="loading" && <> 
+      {projectStatus !=="loading" && <> 
       {openDeleteModal && (
         <DeleteConfirmModel open={openDeleteModal} setOpen={setDeleteModal} project={projectToDelete} />
       )}

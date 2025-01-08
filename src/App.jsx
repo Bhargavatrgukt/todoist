@@ -26,7 +26,7 @@ const App = () => {
     if(tasksStatus==="idle"){
        dispatch(fetchTasks())
     }
-  },[dispatch])
+  },[])
   
 
   return (
