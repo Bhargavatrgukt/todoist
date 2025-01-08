@@ -3,13 +3,18 @@ import { Select,Button } from "antd";
 import { ProjectsContext } from '../context/ProjectsContext';
 import { useContext } from 'react';
 import api from '../services/todoApi';
+import { useSelector,useDispatch } from 'react-redux';
+import { addTask,updateTask } from '../features/tasksSlice';
 
 const AddTask = ({projectIdOfTask,setIsAddTask,task}) => {
   
-   const {projects,addTask,updateTask}=useContext(ProjectsContext)
+  const dispatch=useDispatch()
+  //  const {projects,addTask,updateTask}=useContext(ProjectsContext)
    const [taskName, setTaskName] = useState(task?task.content:"");
    const [taskDescription,setAddTaskDescription]=useState(task?task.description:"")
    const [projectId,setProjectId]=useState(projectIdOfTask)
+   const projects=useSelector((state)=>state.tasks.tasks)
+
 
    const optionsValues = projects.map((project) => ({
     value: project.id,
@@ -22,10 +27,12 @@ const AddTask = ({projectIdOfTask,setIsAddTask,task}) => {
         if(task){
             console.log(task)
             const updatedTask=await api.updateTask(task.id, { content:taskName,description:taskDescription });
-            updateTask(updatedTask)
+            // updateTask(updatedTask)
+            dispatch(updateTask(updatedTask))
         }else{
         const task = await api.addTask({ content:taskName,description:taskDescription,project_id:projectId});
-        addTask(task);
+        // addTask(task);
+         dispatch(addTask(task))
         }
         setIsAddTask(false) 
     } catch (error) {

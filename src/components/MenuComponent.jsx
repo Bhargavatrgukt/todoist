@@ -7,9 +7,15 @@ import { useProjectState } from "../hooks/projectHook.js";
 import generateProjectItems from "../utils/generateProjectsItems.jsx";
 import { Link } from "react-router";
 import TaskModel from "./TaskModel.jsx";
+import { useSelector} from "react-redux";
+import { useNavigate } from "react-router";
+
 
 const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
+  const navigate = useNavigate();
   const [taskModalOpen, setTaskModalOpen] = useState(false);
+  const projects=useSelector((state)=>state.projects.projects);
+  const projectStatus=useSelector((state)=>state.projects.status);
   const {
      hoveredKey,
     setHoveredKey,
@@ -20,7 +26,10 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
     projectToDelete,
     setProjectToDelete,
   } = useProjectState();
-  const { projects, updateProject } = useContext(ProjectsContext);
+
+ 
+
+  // const {  updateProject } = useContext(ProjectsContext);
   
 
   const formattedProjects = generateProjectItems(projects.slice(1,), "user", hoveredKey,
@@ -30,8 +39,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
   setDeleteModal,
   setProjectToDelete,
   setEditingProject,
-  setIsModalOpen,
-  updateProject);
+  setIsModalOpen,navigate );
 
   const favoriteProjects = generateProjectItems(
     projects.slice(1).filter((project) => project.isFavorite),
@@ -43,9 +51,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
     setDeleteModal,
     setProjectToDelete,
     setEditingProject,
-    setIsModalOpen,
-    updateProject
-  );
+    setIsModalOpen,navigate );
 
   
   const items = [
@@ -104,7 +110,10 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
   ];
 
   return (
-    <>
+    <> 
+     {
+      projectStatus==="loading" && <p>Loading</p>
+     }
       {openDeleteModal && (
         <DeleteConfirmModel open={openDeleteModal} setOpen={setDeleteModal} project={projectToDelete} />
       )}

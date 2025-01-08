@@ -3,17 +3,20 @@ import { Button, Modal } from "antd";
 import { ProjectsContext } from "../context/ProjectsContext.jsx";
 import api from "../services/todoApi.js";
 import { useNavigate } from "react-router";
+import { deleteProject } from "../features/projectsSlice.js";
+import { useDispatch } from "react-redux";
 
 const DeleteConfirmModel = ({ open, setOpen, project }) => {
-   const { deleteProject } = useContext(ProjectsContext)
+  const dispatch=useDispatch()
+  //  const { deleteProject } = useContext(ProjectsContext)
    const navigate = useNavigate(); 
 
   const handleDelete = async() => {
     try{
       // navigate("/")
-      deleteProject(project.id)
-      setOpen(false); 
       await api.deleteProject(project.id)
+      dispatch(deleteProject(project.id))
+      setOpen(false); 
     }catch(error){
       console.log(`${error} at deleting Model`)
     }

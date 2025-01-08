@@ -4,13 +4,17 @@ import colorPalette from '../utils/colorPalette ';
 import { useContext, useState,useEffect } from 'react';
 import api from '../services/todoApi';
 import { ProjectsContext } from '../context/ProjectsContext';
+import { addProject,updateProject } from '../features/projectsSlice';
+import { useDispatch } from 'react-redux';
 
 const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditingProject}) => {
+
+  const dispatch=useDispatch()
 
   const [projectName, setProjectName] = useState(editingProject?.name || "");
   const [isFavorite, setIsFavorite] = useState(editingProject?.isFavorite || false);
   const [selectedColor, setSelectedColor] = useState(editingProject?.color || "charcoal");
-  const {addProject, updateProject }= useContext(ProjectsContext);
+  // const {addProject, updateProject }= useContext(ProjectsContext);
 
     const selectOptions=colorPalette.map((colorDetails)=>{
         return {
@@ -40,11 +44,12 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
           setIsModalOpen(false);
             if (editingProject) {
               await api.updateProject(editingProject.id, { name: projectName, isFavorite, color: selectedColor });
-               updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
+               dispatch(updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor }))
               // console.log("Project updated!");
             }else{
                 const project = await api.addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});
-                addProject(project);
+                // addProject(project);
+                dispatch(addProject(project))
             }
             setEditingProject(null);
          

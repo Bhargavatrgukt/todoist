@@ -1,13 +1,15 @@
 import React,{useContext} from 'react'
 import { Routes,Route } from 'react-router'
-import {  ProjectsContext  } from "../context/ProjectsContext.jsx"
+// import {  ProjectsContext  } from "../context/ProjectsContext.jsx"
 import slugify from '../utils/slugify'
 import ActiveProjects from './ActiveProjects.jsx'
 import HomeRoute from '../routes/HomeRoute.jsx'
 import ProjectTaskRoute from '../routes/ProjectTaskRoute.jsx'
+import { useSelector } from 'react-redux'
 
 const Content = () => {
-  const {projects}=useContext(ProjectsContext)
+  // const {projects}=useContext(ProjectsContext)
+  const projects=useSelector((state)=>state.projects.projects)
   return (
     <Routes>
         <Route path='/' element={<HomeRoute />}/>

@@ -4,12 +4,16 @@ import TaskComponent from '../components/TaskComponent';
 import { ProjectsContext } from '../context/ProjectsContext';
 import { useProjectState } from '../hooks/projectHook';
 import {PlusCircleOutlined,PlusOutlined } from "@ant-design/icons";
+import { useSelector } from 'react-redux';
 import AddTask from '../components/AddTask';
 
 const ProjectTaskRoute = ({project}) => {
-  const{tasks}=useContext(ProjectsContext)
+  // const{tasks}=useContext(ProjectsContext)
   const {hoveredKey, setHoveredKey}=useProjectState()
   const [isAddTask, setIsAddTask] = useState(false);
+  const tasks=useSelector((state)=>state.tasks.tasks)
+
+  console.log(tasks)
 
 
   const handleAddTask=(e)=>{

@@ -2,7 +2,7 @@ import { colorForHash } from "./colorUtils";
 import MoreActions from "../components/MoreActions";
 import {EllipsisOutlined} from "@ant-design/icons";
 import {  Tooltip, Dropdown } from "antd";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import slugify from "./slugify";
 
 const generateProjectItems = (projects, prefix ,hoveredKey,
@@ -12,9 +12,7 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
   setDeleteModal,
   setProjectToDelete,
   setEditingProject,
-  setIsModalOpen,
-  updateProject,active=true) => {
-    const navigate = useNavigate();  
+  setIsModalOpen,navigate,active=true) => { 
   return projects.map((project) => {
     const colorDetails = colorForHash(project.color);
     const colorStyle = colorDetails ? colorDetails.color : project.color;
@@ -43,14 +41,13 @@ const generateProjectItems = (projects, prefix ,hoveredKey,
             <div onClick={(e)=>e.stopPropagation()}>
               <Dropdown
                 trigger={["click"]}
-                menu={MoreActions({
-                  project,
-                  setDeleteModal,
-                  setProjectToDelete,
-                  setEditingProject,
-                  setIsModalOpen,
-                  updateProject,
-                })}
+                menu={<MoreActions
+                  project={project}
+                  setDeleteModal={setDeleteModal}
+                  setProjectToDelete={setProjectToDelete}
+                  setEditingProject={setEditingProject}
+                  setIsModalOpen={setIsModalOpen}
+                />}
                 placement="rightTop"
                 onClick={(e) => e.stopPropagation()}
               >

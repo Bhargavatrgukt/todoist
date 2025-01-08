@@ -5,16 +5,20 @@ import api from '../services/todoApi';
 import { ProjectsContext } from '../context/ProjectsContext';
 import { useContext,useState } from 'react';
 import AddTask from "./AddTask";
+import { deleteTask } from "../features/tasksSlice";
+import { useDispatch } from "react-redux";
+
 
 const TaskComponent = ({task,hoveredKey,setHoveredKey}) => {
+  const dispatch=useDispatch()
   
   const [isUpdateTask, setUpdateTask] = useState(false);
-  const {deleteTask}=useContext(ProjectsContext)
+  // const {deleteTask}=useContext(ProjectsContext)
 
   const handleChange=async()=>{
     try {
       await api.deleteTask(task.id)
-      deleteTask(task.id)
+      dispatch(deleteTask(task.id))
     } catch (error) {
       console.log(`error at deleting task`,error)
     }

@@ -1,19 +1,24 @@
 import { EditOutlined, HeartOutlined, DeleteOutlined, HeartFilled } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 import api from "../services/todoApi";
+import {updateProject} from "../features/projectsSlice.js"
 
 
-const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingProject, setIsModalOpen, updateProject }) => {
+const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingProject, setIsModalOpen }) => {
+  const dispatch = useDispatch();
+
   const handleEdit = () => {
     setEditingProject(project);
     setIsModalOpen(true);
   };
   const handleUpdate = async (updatedProject) => {
     try {
-      updateProject(updatedProject);
+      // updateProject(updatedProject);
       const msg = await api.updateProject(updatedProject.id, {
         isFavorite: updatedProject.isFavorite,
         name: updatedProject.name, 
       });
+      dispatch(updateProject(msg))
       console.log("Update successful:", msg);
     } catch (error) {
       console.error("Failed to update project:", error);

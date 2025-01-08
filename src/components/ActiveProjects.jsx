@@ -1,5 +1,5 @@
 import { useContext,useState } from 'react'
-import { ProjectsContext } from '../context/ProjectsContext'
+// import { ProjectsContext } from '../context/ProjectsContext'
 import { Input } from "antd";
 import { SearchOutlined,PlusOutlined } from "@ant-design/icons";
 import { ModelContext } from '../context/ModelContext';
@@ -8,11 +8,16 @@ import {  Tooltip} from "antd";
 import { useProjectState } from '../hooks/projectHook';
 import generateProjectItems from "../utils/generateProjectsItems"
 import DeleteConfirmModel from './DeleteConfirmModel';
+import { useSelector } from 'react-redux';
+import { updateProject } from '../features/projectsSlice';
 
 
 const ActiveProjects = () => {
  const [projectName,searchProject]=useState("");   
- const {projects,updateProject }=useContext(ProjectsContext)
+//  const {projects,updateProject }=useContext(ProjectsContext)
+  const projects=useSelector((state)=>state.projects.projects);
+  const projectStatus=useSelector((state)=>state.projects.status);
+
  const {setIsModalOpen, setEditingProject}=useContext(ModelContext)
 
    const {
@@ -38,7 +43,9 @@ const ActiveProjects = () => {
    setIsModalOpen,
    updateProject,false);
   return (
-    <> 
+    <>
+      {projectStatus ==="loading" && <p>Loading</p>}
+      {!projectStatus ==="loading" && <> 
       {openDeleteModal && (
         <DeleteConfirmModel open={openDeleteModal} setOpen={setDeleteModal} project={projectToDelete} />
       )}
@@ -79,7 +86,8 @@ const ActiveProjects = () => {
             </ul>
         </div>  
     </div>
-  </>
+    </>}
+   </> 
   )
 }
 
