@@ -2,12 +2,17 @@ import React, { useState, useContext } from 'react';
 import { ProjectsContext } from '../context/ProjectsContext';
 import { Button, Modal, Select } from 'antd';
 import api from '../services/todoApi';
+import { addTask } from '../features/tasksSlice';
+import { useSelector,useDispatch } from 'react-redux';
 
 const TaskModel = ({ taskModalOpen, setTaskModalOpen }) => {
-  const { projects, addTask } = useContext(ProjectsContext);
+  // const { projects, addTask } = useContext(ProjectsContext);
+  const projects=useSelector((state)=>state.projects.projects)
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setAddTaskDescription] = useState("");
   const [projectId, setProjectId] = useState(projects[0]?.id);
+
+  const dispatch=useDispatch()
 
   const optionsValues = projects.map((project) => ({
     value: project.id,
@@ -18,7 +23,7 @@ const TaskModel = ({ taskModalOpen, setTaskModalOpen }) => {
   const handleAddTask = async () => {
     try {
       const task = await api.addTask({ content: taskName, description: taskDescription, project_id: projectId });
-      addTask(task);
+      dispatch(addTask(task));
     } catch (error) {
       console.error("Error adding task:", error.response ? error.response.data : error);
     }
