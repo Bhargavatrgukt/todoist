@@ -34,7 +34,7 @@ const MenuComponent = ({ collapsed, setIsModalOpen, setEditingProject }) => {
   updateProject);
 
   const favoriteProjects = generateProjectItems(
-    projects.slice(1).filter((project) => project.isFavorite),
+    projects.slice(1).filter((project) => project.is_favorite),
     "favorite",
     hoveredKey,
     setHoveredKey,

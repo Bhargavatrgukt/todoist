@@ -11,7 +11,7 @@ const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingPr
     try {
       updateProject(updatedProject);
       const msg = await api.updateProject(updatedProject.id, {
-        isFavorite: updatedProject.isFavorite,
+        is_favorite: updatedProject.is_favorite,
         name: updatedProject.name, 
       });
       console.log("Update successful:", msg);
@@ -21,7 +21,7 @@ const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingPr
   };
 
   const toggleFavorite = () => {
-    const updatedProject = { ...project, isFavorite: !project.isFavorite };
+    const updatedProject = { ...project, is_favorite: !project.is_favorite };
     handleUpdate(updatedProject);
   };
 
@@ -46,8 +46,8 @@ const MoreActions = ({ project, setDeleteModal, setProjectToDelete, setEditingPr
       {
         key: "2",
         label: renderMenuItem(
-          project.isFavorite ? <HeartFilled /> : <HeartOutlined />,
-          project.isFavorite ? "Remove from Favorites" : "Add to Favorites",
+          project.is_favorite? <HeartFilled /> : <HeartOutlined />,
+          project.iis_favorite? "Remove from Favorites" : "Add to Favorites",
           toggleFavorite
         ),
       },

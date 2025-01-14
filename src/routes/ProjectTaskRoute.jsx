@@ -26,7 +26,7 @@ const ProjectTaskRoute = ({project}) => {
                 <h1 className="text-2xl font-bold mb-4 text-left">{project.name}</h1>
                 <ul className="list-none space-y-2">
                 {tasks
-                    .filter((task) => task.projectId === project.id)
+                    .filter((task) => task.project_id=== project.id)
                     .map((task) => (
                     <TaskComponent task={task} key={task.id} hoveredKey={hoveredKey} setHoveredKey={setHoveredKey}/>
                     ))}

@@ -8,9 +8,10 @@ import { ProjectsContext } from '../context/ProjectsContext';
 const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditingProject}) => {
 
   const [projectName, setProjectName] = useState(editingProject?.name || "");
-  const [isFavorite, setIsFavorite] = useState(editingProject?.isFavorite || false);
+  const [isFavorite, setIsFavorite] = useState(editingProject?.is_favorite || false);
   const [selectedColor, setSelectedColor] = useState(editingProject?.color || "charcoal");
   const {addProject, updateProject }= useContext(ProjectsContext);
+
 
     const selectOptions=colorPalette.map((colorDetails)=>{
         return {
@@ -39,12 +40,12 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
         try {
           setIsModalOpen(false);
             if (editingProject) {
-              await api.updateProject(editingProject.id, { name: projectName, isFavorite, color: selectedColor });
-               updateProject({id:editingProject.id,  name: projectName, isFavorite, color: selectedColor })
+              await api.updateProject(editingProject.id, { name: projectName, is_favorite:isFavorite, color: selectedColor });
+               updateProject({id:editingProject.id,  name: projectName, is_favorite:isFavorite, color: selectedColor })
               // console.log("Project updated!");
             }else{
                 const project = await api.addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});
-                addProject(project);
+                addProject({name: projectName,isFavorite: isFavorite,color: selectedColor});
             }
             setEditingProject(null);
          
@@ -59,7 +60,6 @@ const ModalComponent = ({ isModalOpen, setIsModalOpen, editingProject, setEditin
       };
       const onChangeSwitch = (checked) => {
         setIsFavorite(checked);
-        console.log(`switch to ${checked}`);
       };
  
       

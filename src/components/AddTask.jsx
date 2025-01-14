@@ -20,12 +20,11 @@ const AddTask = ({projectIdOfTask,setIsAddTask,task}) => {
   const handleAddTask=async()=>{
     try {
         if(task){
-            console.log(task)
-            const updatedTask=await api.updateTask(task.id, { content:taskName,description:taskDescription });
-            updateTask(updatedTask)
+            const updatedTask=await api.updateTask(task.id, {...task, content:taskName,description:taskDescription });
+            updateTask({...task, content:taskName,description:taskDescription })
         }else{
-        const task = await api.addTask({ content:taskName,description:taskDescription,project_id:projectId});
-        addTask(task);
+         await api.addTask({ content:taskName,description:taskDescription,project_id:projectId});
+        addTask({ content:taskName,description:taskDescription,project_id:projectId});
         }
         setIsAddTask(false) 
     } catch (error) {

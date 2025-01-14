@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
-import api from '../services/todoApi';
+import { getProjects,getTasks } from '../services/todoApi.js';
+// import api from '../services/todoApi';
+
 
 export const ProjectsContext = createContext();
 
@@ -10,7 +12,7 @@ export const ProjectsProvider = ({ children }) => {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectsData, tasksData] = await Promise.all([api.getProjects(), api.getTasks()]);
+       const [projectsData,tasksData]=await Promise.all([getProjects(),getTasks()])
         setProjects(projectsData);
         setTasks(tasksData);
       } catch (error) {
@@ -50,6 +52,7 @@ export const ProjectsProvider = ({ children }) => {
   }
 
   const updateTask = (updatedTask) => {
+    console.log(updatedTask)
     setTasks((prevTasks) => {
       return prevTasks.map((task) =>
         task.id === updatedTask.id ? { ...task, ...updatedTask } : task

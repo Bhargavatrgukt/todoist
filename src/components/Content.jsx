@@ -13,7 +13,7 @@ const Content = () => {
         <Route path='/' element={<HomeRoute />}/>
         {projects.map((project) => (
         <Route
-            key={project.id}
+            key={`${project.id}-${project.name}`}
             path={`/${slugify(project.name)}-${project.id}`}
             element={<ProjectTaskRoute project={project}/>}
         />
