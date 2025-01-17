@@ -5,23 +5,22 @@ import slugify from '../utils/slugify'
 import ActiveProjects from './ActiveProjects.jsx'
 import HomeRoute from '../routes/HomeRoute.jsx'
 import ProjectTaskRoute from '../routes/ProjectTaskRoute.jsx'
-import SignUp from '../pages/SignUp.jsx'
+import PrivateRoute from '../routes/PrivateRoute.jsx'
 
 const Content = () => {
   const {projects}=useContext(ProjectsContext)
   return (
     <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path='/' element={<HomeRoute />}/>
-        {projects.map((project) => (
-        <Route
-            key={`${project.id}-${project.name}`}
-            path={`/${slugify(project.name)}-${project.id}`}
-            element={<ProjectTaskRoute project={project}/>}
-        />
-        ))}
-        <Route path ="/projects/active" element={<ActiveProjects />} />
-   </Routes>
+          <Route path='/' element={<HomeRoute />}/>
+          {projects.map((project) => (
+          <Route
+              key={`${project.id}-${project.name}`}
+              path={`/${slugify(project.name)}-${project.id}`}
+              element={<ProjectTaskRoute project={project}/>}
+          />
+          ))}
+          <Route path ="/projects/active" element={<ActiveProjects />} />
+      </ Routes>   
   )
 }
 

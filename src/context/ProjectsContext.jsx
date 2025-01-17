@@ -1,18 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getProjects,getTasks } from '../services/todoApi.js';
+import { useAuth } from './AuthContext.jsx';
 // import api from '../services/todoApi';
 
 
 export const ProjectsContext = createContext();
 
 export const ProjectsProvider = ({ children }) => {
+  const { token } = useAuth();
   const [projects, setProjects] = useState([]);
    const [tasks, setTasks] = useState([]);
 
    useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (token) => {
       try {
-       const [projectsData,tasksData]=await Promise.all([getProjects(),getTasks()])
+       const [projectsData,tasksData]=await Promise.all([getProjects(token),getTasks(token)])
         setProjects(projectsData);
         setTasks(tasksData);
       } catch (error) {
@@ -21,7 +23,7 @@ export const ProjectsProvider = ({ children }) => {
     };
   
     fetchData();
-  }, []);
+  }, [token]);
 
   
 
