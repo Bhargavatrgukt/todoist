@@ -9,11 +9,14 @@ const getToken = () => {
 export const getProjects = async () => {
   try {
     const token = getToken();
-    const response = await fetch("http://localhost:3000/app/projects", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      "https://project-todo-backend-6sjq.onrender.com/app/projects",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -24,11 +27,14 @@ export const getProjects = async () => {
 export const getTasks = async () => {
   try {
     const token = getToken();
-    const response = await fetch("http://localhost:3000/app/tasks", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      "https://project-todo-backend-6sjq.onrender.com/app/tasks",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -40,14 +46,17 @@ const api = {
   addProject: async (project) => {
     try {
       const token = getToken();
-      const response = await fetch("http://localhost:3000/app/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(project),
-      });
+      const response = await fetch(
+        "https://project-todo-backend-6sjq.onrender.com/app/projects",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(project),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to add project: ${response.statusText}`);
       }
@@ -59,14 +68,17 @@ const api = {
   updateProject: async (id, project) => {
     try {
       const token = getToken();
-      const response = await fetch(`http://localhost:3000/app/projects/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(project),
-      });
+      const response = await fetch(
+        `https://project-todo-backend-6sjq.onrender.com/app/projects/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(project),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to update project: ${response.statusText}`);
       }
@@ -77,13 +89,16 @@ const api = {
   deleteProject: async (id) => {
     try {
       const token = getToken();
-      await fetch(`http://localhost:3000/app/projects/${id}`, {
-        method: "DELETE", // No body needed for DELETE
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await fetch(
+        `https://project-todo-backend-6sjq.onrender.com/app/projects/${id}`,
+        {
+          method: "DELETE", // No body needed for DELETE
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       console.error("Error deleting project:", error);
     }
@@ -91,14 +106,17 @@ const api = {
   addTask: async (task) => {
     try {
       const token = getToken();
-      const response = await fetch("http://localhost:3000/app/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(task),
-      });
+      const response = await fetch(
+        "https://project-todo-backend-6sjq.onrender.com/app/tasks",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(task),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to add project: ${response.statusText}`);
       }
@@ -110,14 +128,17 @@ const api = {
   updateTask: async (id, task) => {
     try {
       const token = getToken();
-      const response = await fetch(`http://localhost:3000/app/tasks/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(task),
-      });
+      const response = await fetch(
+        `https://project-todo-backend-6sjq.onrender.com/app/tasks/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(task),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to update project: ${response.statusText}`);
       }
@@ -128,13 +149,16 @@ const api = {
   deleteTask: async (id) => {
     try {
       const token = getToken();
-      await fetch(`http://localhost:3000/app/tasks/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await fetch(
+        `https://project-todo-backend-6sjq.onrender.com/app/tasks/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       console.error("Error deleting project:", error);
     }
@@ -142,13 +166,16 @@ const api = {
 
   userAuth: async (userData, type) => {
     try {
-      const response = await fetch(`http://localhost:3000/app/${type}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        `https://project-todo-backend-6sjq.onrender.com/app/${type}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to auth for ${type}: ${response.statusText}`);
       }
